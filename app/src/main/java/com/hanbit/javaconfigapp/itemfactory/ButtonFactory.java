@@ -19,6 +19,14 @@ public class ButtonFactory {
         return btn;
     }
 
+    public static Button createButton(Context context, LinearLayout.LayoutParams layoutParams, String text, int textSize) {
+        Button btn = new Button(context);
+        btn.setLayoutParams(layoutParams);
+        btn.setText(text);
+        btn.setTextSize(textSize);
+        return btn;
+    }
+
     public static Button createButton(Context context, LinearLayout.LayoutParams layoutParams, String text, String bgColor) {
         Button btn = new Button(context);
         btn.setLayoutParams(layoutParams);
