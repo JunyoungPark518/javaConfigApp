@@ -16,6 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".member.MemberList" />
+        <activity android:name=".test" />
+        <activity android:name=".member.MemberAdd" />
+        <activity android:name=".member.MemberDetail" />
+        <activity android:name=".member.MemberUpdate" />
+        <activity android:name=".message.MessageList" />
+        <activity android:name=".message.MessageWrite"></activity>
     </application>
 
 </manifest>
