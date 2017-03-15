@@ -1,4 +1,4 @@
-package com.hanbit.javaconfigapp.factory;
+package com.hanbit.javaconfigapp.itemfactory;
 
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -30,11 +30,32 @@ public class LayoutParamsFactory {
                 rs = new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
                 );
-            case "mww":
+                break;
+        }
+        return rs;
+    }
+    public static LinearLayout.LayoutParams createLayoutParams(String flag, int weight) {
+        LinearLayout.LayoutParams rs = null;
+        switch(flag) {
+            case "mm":
                 rs = new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, weight
                 );
                 break;
+            case "mw":
+                rs = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, weight
+                );
+                break;
+            case "ww":
+                rs = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, weight
+                );
+                break;
+            case "wm":
+                rs = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, weight
+                );
         }
         return rs;
     }

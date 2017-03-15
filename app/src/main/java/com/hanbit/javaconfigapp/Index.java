@@ -10,11 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hanbit.javaconfigapp.factory.LayoutParamsFactory;
-import com.hanbit.javaconfigapp.items.ButtonCreator;
-import com.hanbit.javaconfigapp.items.LinearLayoutItem;
-import com.hanbit.javaconfigapp.items.TextViewCreator;
-import com.hanbit.javaconfigapp.member.MemberDetail;
+import com.hanbit.javaconfigapp.itemfactory.LayoutParamsFactory;
+import com.hanbit.javaconfigapp.itemfactory.ButtonFactory;
+import com.hanbit.javaconfigapp.itemfactory.LinearLayoutFactory;
+import com.hanbit.javaconfigapp.itemfactory.TextViewFactory;
+import com.hanbit.javaconfigapp.member.MemberList;
 
 public class Index extends AppCompatActivity {
 
@@ -27,18 +27,18 @@ public class Index extends AppCompatActivity {
         LinearLayout.LayoutParams mw = LayoutParamsFactory.createLayoutParams("mw");
 
         int[] llMarginArr = {0, 200, 0, 0};
-        LinearLayout ui = LinearLayoutItem.getLinearLayout(context, mm, "v", llMarginArr);
-        TextView tv = TextViewCreator.getTextView(context, mw, "HELLO", 30);
+        LinearLayout ui = LinearLayoutFactory.getLinearLayout(context, mm, "v", llMarginArr);
+        TextView tv = TextViewFactory.createTextView(context, mw, "HELLO", 30);
         ui.addView(tv);
         int[] btnMarginArr = {0, 300, 0, 0};
-        Button btn = ButtonCreator.getButton(context, mw, "Button", "#00ff00", btnMarginArr);
+        Button btn = ButtonFactory.createButton(context, mw, "Button", "#00ff00", btnMarginArr);
         ui.addView(btn);
         setContentView(ui);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Hi!", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(context, MemberDetail.class));
+                startActivity(new Intent(context, MemberList.class));
             }
         });
     }

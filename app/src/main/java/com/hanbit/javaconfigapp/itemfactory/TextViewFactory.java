@@ -1,6 +1,7 @@
-package com.hanbit.javaconfigapp.items;
+package com.hanbit.javaconfigapp.itemfactory;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -8,20 +9,20 @@ import android.widget.TextView;
  * Created by hb2005 on 2017-03-15.
  */
 
-public class TextViewCreator {
-    public static TextView getTextView(Context context, LinearLayout.LayoutParams layoutParams, String text, int textSize) {
+public class TextViewFactory {
+    public static TextView createTextView(Context context, LinearLayout.LayoutParams layoutParams, String text, int textSize) {
         TextView tv = new TextView(context);
         tv.setLayoutParams(layoutParams);
         tv.setText(text);
-        tv.setTextSize(textSize);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize);
         return tv;
     }
 
-    public static TextView getTextView(Context context, LinearLayout.LayoutParams layoutParams, String text, int textSize, String gravity) {
+    public static TextView createTextView(Context context, LinearLayout.LayoutParams layoutParams, String text, int textSize, String gravity) {
         TextView tv = new TextView(context);
         tv.setLayoutParams(layoutParams);
         tv.setText(text);
-        tv.setTextSize(textSize);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize);
         switch (gravity) {
             case "left":
                 tv.setGravity(0);

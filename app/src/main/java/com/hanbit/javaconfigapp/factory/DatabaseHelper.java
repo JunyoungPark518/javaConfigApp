@@ -19,21 +19,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS Message (" +
-                "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "title TEXT," +
-                "content TEXT," +
-                "writeDate TEXT," +
-                "isReadable TEXT," +
-                "sender TEXT," +
-                "receiver TEXT," +
-                "temp2 TEXT," +
-                "temp3 TEXT," +
-                "temp4 TEXT," +
-                "temp5 TEXT," +
-                "temp6 TEXT," +
-                "temp7 TEXT," +
-                "temp8 TEXT);");
+        String sql = "CREATE TABLE IF NOT EXISTS Member(_id integer primary key autoincrement, name TEXT, phone TEXT, age TEXT, address TEXT, salary TEXT);" +
+                "CREATE TABLE IF NOT EXISTS Message(_id integer primary key autoincrement, title TEXT,content TEXT, write_date TEXT, sender TEXT, receiver TEXT, FOREIGN KEY(sender) REFERENCES Member(_id), FOREIGN KEY(receiver) REFERENCES Member(_id));";
+        db.execSQL(sql);
+        for(int i=0;i<10;i++){
+            db.execSQL(String.format("INSERT INTO Member(name,phone,age,address,salary) VALUES('%s','%s','%s','%s','%s');","홍길동"+i,"010-0000-000"+i,"2"+i,"서울",(i+1)+"00"));
+        }
     }
 
     @Override

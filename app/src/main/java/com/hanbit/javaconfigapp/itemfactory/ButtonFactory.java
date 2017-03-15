@@ -1,4 +1,4 @@
-package com.hanbit.javaconfigapp.items;
+package com.hanbit.javaconfigapp.itemfactory;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,16 +10,16 @@ import android.widget.LinearLayout;
  * Created by hb2005 on 2017-03-15.
  */
 
-public class ButtonCreator {
+public class ButtonFactory {
 
-    public static Button getButton(Context context, LinearLayout.LayoutParams layoutParams, String text) {
+    public static Button createButton(Context context, LinearLayout.LayoutParams layoutParams, String text) {
         Button btn = new Button(context);
         btn.setLayoutParams(layoutParams);
         btn.setText(text);
         return btn;
     }
 
-    public static Button getButton(Context context, LinearLayout.LayoutParams layoutParams, String text, String bgColor) {
+    public static Button createButton(Context context, LinearLayout.LayoutParams layoutParams, String text, String bgColor) {
         Button btn = new Button(context);
         btn.setLayoutParams(layoutParams);
         btn.setText(text);
@@ -27,7 +27,7 @@ public class ButtonCreator {
         return btn;
     }
 
-    public static Button getButton(Context context, LinearLayout.LayoutParams layoutParams, String text, String bgColor, int[] margin) {
+    public static Button createButton(Context context, LinearLayout.LayoutParams layoutParams, String text, String bgColor, int[] margin) {
         Button btn = new Button(context);
         ViewGroup.MarginLayoutParams btnMargin = new ViewGroup.MarginLayoutParams(layoutParams);
         btn.setText(text);

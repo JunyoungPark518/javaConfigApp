@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hb2005 on 2017-03-15.
@@ -22,5 +22,5 @@ public abstract class ReadQuery extends QueryFactory{
         return helper.getReadableDatabase();
     }
 
-    public abstract ArrayList<?> list(String sql);
+    public abstract List<?> list(String sql);
 }
