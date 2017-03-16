@@ -11,9 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hanbit.javaconfigapp.action.IDetail;
-import com.hanbit.javaconfigapp.composite.CompositeCompo;
+import com.hanbit.javaconfigapp.composite.Composite;
 import com.hanbit.javaconfigapp.factory.ReadQuery;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class MemberDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         final Context context = MemberDetail.this;
         final String id = this.getIntent().getExtras().getString("id").toString();
-
+        HashMap<String, Object> map = (HashMap<String, Object>) init(context);
         IDetail service = new IDetail() {
             @Override
             public List<?> detail(String id) {
@@ -35,17 +36,17 @@ public class MemberDetail extends AppCompatActivity {
             }
         };
         final ArrayList<String> member= (ArrayList<String>) service.detail(id);
-        TextView tv1 = (TextView) init(context).get("tvDetailName");
+        TextView tv1 = (TextView) map.get("tvDetailName");
         tv1.setText("NAME: " + member.get(1));
-        TextView tv2 = (TextView) init(context).get("tvDetailPhone");
+        TextView tv2 = (TextView) map.get("tvDetailPhone");
         tv2.setText("PHONE: " + member.get(2));
-        TextView tv3 = (TextView) init(context).get("tvDetailAge");
+        TextView tv3 = (TextView) map.get("tvDetailAge");
         tv3.setText("AGE: " + member.get(3));
-        TextView tv4 = (TextView) init(context).get("tvDetailAddress");
+        TextView tv4 = (TextView) map.get("tvDetailAddress");
         tv4.setText("ADDRESS: " + member.get(4));
-        TextView tv5 = (TextView) init(context).get("tvDetailSalary");
+        TextView tv5 = (TextView) map.get("tvDetailSalary");
         tv5.setText("SALARY: " + member.get(5));
-        Button btnDetailDial = (Button) init(context).get("btnDetailDial");
+        Button btnDetailDial = (Button) map.get("btnDetailDial");
         btnDetailDial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +55,7 @@ public class MemberDetail extends AppCompatActivity {
                 startActivity(it);
             }
         });
-        Button btnDetailUpdate = (Button) init(context).get("btnDetailUpdate");
+        Button btnDetailUpdate = (Button) map.get("btnDetailUpdate");
         btnDetailUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,15 +65,15 @@ public class MemberDetail extends AppCompatActivity {
                 startActivity(it);
             }
         });
-        Button btnDetailList = (Button) init(context).get("btnDetailList");
+        Button btnDetailList = (Button) map.get("btnDetailList");
         btnDetailList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(context, "PLAESE!!!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(context, MemberList.class));
             }
         });
-
-        setContentView((LinearLayout) init(context).get("llDetailFrame"));
+        setContentView((LinearLayout) map.get("llDetailFrame"));
     }
     class DetailDAO extends ReadQuery {
         public DetailDAO(Context context) {
@@ -98,7 +99,7 @@ public class MemberDetail extends AppCompatActivity {
     }
 
     public HashMap<?,?> init(Context context) {
-        CompositeCompo compo = new CompositeCompo(context, "MemberDetail");
+        Composite compo = new Composite(context, "MemberDetail");
         compo.execute();
         return compo.getComponents();
     }

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.hanbit.javaconfigapp.composite.CompositeCompo;
+import com.hanbit.javaconfigapp.composite.Composite;
 import com.hanbit.javaconfigapp.member.MemberList;
 
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class Index extends AppCompatActivity {
     }
 
     public HashMap<?,?> init(Context context) {
-        CompositeCompo compo = new CompositeCompo(context, "Index");
+        Composite compo = new Composite(context, "Index");
         compo.execute();
         setContentView(compo.getFrame());
         return compo.getComponents();

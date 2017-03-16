@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.hanbit.javaconfigapp.action.IUpdate;
-import com.hanbit.javaconfigapp.composite.CompositeCompo;
+import com.hanbit.javaconfigapp.composite.Composite;
 import com.hanbit.javaconfigapp.composite.Complex;
 import com.hanbit.javaconfigapp.factory.WriteQuery;
 
@@ -119,7 +119,7 @@ public class MemberUpdate extends AppCompatActivity {
     }
 
     public HashMap<?,?> init(Context context) {
-        CompositeCompo compo = new CompositeCompo(context, "MemberUpdate");
+        Composite compo = new Composite(context, "MemberUpdate");
         compo.execute();
         setContentView(compo.getFrame());
         return compo.getComponents();

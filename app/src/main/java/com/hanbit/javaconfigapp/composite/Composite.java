@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Created by hb2005 on 2017-03-16.
  */
 
-public class CompositeCompo {
+public class Composite {
     interface IComposite { void execute(); };
     final HashMap<String, Object> map = new HashMap<>();
     String order;
@@ -31,7 +31,7 @@ public class CompositeCompo {
         return map;
     }
 
-    public CompositeCompo(Context context, String order) {
+    public Composite(Context context, String order) {
         this.context = context;
         this.order = order;
     }
