@@ -1,10 +1,12 @@
 package com.hanbit.javaconfigapp.member;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -18,8 +20,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hanbit.javaconfigapp.R;
+import com.hanbit.javaconfigapp.action.IDelete;
 import com.hanbit.javaconfigapp.action.IList;
 import com.hanbit.javaconfigapp.factory.ReadQuery;
+import com.hanbit.javaconfigapp.factory.WriteQuery;
 import com.hanbit.javaconfigapp.itemfactory.LayoutParamsFactory;
 import com.hanbit.javaconfigapp.itemfactory.LinearLayoutFactory;
 import com.hanbit.javaconfigapp.itemfactory.TextViewFactory;
@@ -29,25 +33,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+* @Create : 2017-03-16
+* @Author : John J Park
+* @Story :
+* @Nested Class : ListDAO, DeleteDAO, MemberAdapter ViewHolder
+* */
 public class MemberList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Context context=MemberList.this;
-        LinearLayout ui=new LinearLayout(context);
-        ui.setLayoutParams(LayoutParamsFactory.createLayoutParams("mm"));
-        ListView listView=new ListView(context);
+        final Context context = MemberList.this;
+        LinearLayout.LayoutParams mm = LayoutParamsFactory.createLayoutParams("mm");
+        LinearLayout ui = LinearLayoutFactory.createLinearLayout(context, mm);
+        final ListView listView = new ListView(context);
+        final HashMap<String, String> map = new HashMap<>();
+
         listView.setLayoutParams(LayoutParamsFactory.createLayoutParams("mm"));
         ui.addView(listView);
         setContentView(ui);
 
-        IList service=new IList() {
+        IList service = new IList() {
             @Override
             public List<?> list() {
                 return new ListDAO(context).list("SELECT _id AS id, name, phone, age, address, salary FROM Member;");
             }
         };
-        final ArrayList<Map<String,String>>memberMap= (ArrayList<Map<String, String>>) service.list();
+        final ArrayList<Map<String,String>> memberMap = (ArrayList<Map<String, String>>) service.list();
         listView.setAdapter(new MemberAdapter(memberMap,context));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,9 +69,36 @@ public class MemberList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View v, int i, long l) {
+                HashMap<String,String> tempMap = (HashMap) listView.getItemAtPosition(i);
+                map.clear();
+                map.put("id",tempMap.get("id"));
+                new AlertDialog.Builder(context).setTitle("삭제").setMessage("삭제할까요?").setPositiveButton(
+                        android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                               IDelete service = new IDelete() {
+                                    @Override
+                                    public void delete() {
+                                        new DeleteDAO(context).execQuery(String.format("DELETE FROM Member WHERE _id = '%s'", map.get("id")));
+                                        startActivity(new Intent(context, MemberList.class));
+                                    }
+                                };
+                                service.delete();
+                            }
+                        }
+                ).setNegativeButton(
+                        android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }
+                ).show();
                 return false;
             }
         });
@@ -94,6 +133,18 @@ public class MemberList extends AppCompatActivity {
         }
     }
 
+    class DeleteDAO extends WriteQuery {
+
+        public DeleteDAO(Context context) {
+            super(context);
+        }
+
+        @Override
+        public void execQuery(String sql) {
+            super.getDatabase().execSQL(sql);
+        }
+    }
+
     class MemberAdapter extends BaseAdapter {
         ArrayList<Map<String,String>> list;
         LayoutInflater inflater;
@@ -122,8 +173,7 @@ public class MemberList extends AppCompatActivity {
             LinearLayout uiItem;
             Context context = MemberList.this;
             if(v==null) {
-                uiItem = new LinearLayout(MemberList.this);
-                uiItem = LinearLayoutFactory.getLinearLayout(context, LayoutParamsFactory.createLayoutParams("mm"));
+                uiItem = LinearLayoutFactory.createLinearLayout(context, LayoutParamsFactory.createLayoutParams("mm"));
                 uiItem.setPadding(8, 8, 8, 8);
                 ImageView profileImg = new ImageView(context);
                 profileImg.setLayoutParams(new ViewGroup.LayoutParams((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics()),(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics())));

@@ -32,7 +32,7 @@ public class MemberDetail extends AppCompatActivity {
         LinearLayout.LayoutParams mm = LayoutParamsFactory.createLayoutParams("mm");
         LinearLayout.LayoutParams mw = LayoutParamsFactory.createLayoutParams("mw");
         LinearLayout.LayoutParams mww = LayoutParamsFactory.createLayoutParams("mw", 1);
-        LinearLayout frame = LinearLayoutFactory.getLinearLayout(context, mm, "v");
+        LinearLayout frame = LinearLayoutFactory.createLinearLayout(context, mm, "v");
         TextView tvDetail = TextViewFactory.createTextView(context, mw, "상세", 30, "center");
         frame.addView(tvDetail);
         IDetail service = new IDetail() {
@@ -43,7 +43,7 @@ public class MemberDetail extends AppCompatActivity {
         };
 
         final ArrayList<String> member= (ArrayList<String>) service.detail(id);
-        LinearLayout uiSub = LinearLayoutFactory.getLinearLayout(context, mw, "v");
+        LinearLayout uiSub = LinearLayoutFactory.createLinearLayout(context, mw, "v");
         uiSub.addView(TextViewFactory.createTextView(context, mw, "NAME: " + member.get(1), 25, "left"));
         uiSub.addView(TextViewFactory.createTextView(context, mw, "PHONE: " + member.get(2), 25, "left"));
         uiSub.addView(TextViewFactory.createTextView(context, mw, "AGE: " + member.get(3), 25, "left"));
@@ -51,22 +51,22 @@ public class MemberDetail extends AppCompatActivity {
         uiSub.addView(TextViewFactory.createTextView(context, mw, "SALARY: " + member.get(5), 25, "left"));
         frame.addView(uiSub);
 
-        LinearLayout uiBtns = LinearLayoutFactory.getLinearLayout(context, mw, "h");
+        LinearLayout uiBtns = LinearLayoutFactory.createLinearLayout(context, mw, "h");
         uiBtns.addView(ButtonFactory.createButton(context, mww, "MY LOCATION"));
         uiBtns.addView(ButtonFactory.createButton(context, mww, "GOOGLE MAP"));
         frame.addView(uiBtns);
 
-        LinearLayout uiBtns2 = LinearLayoutFactory.getLinearLayout(context, mw, "h");
+        LinearLayout uiBtns2 = LinearLayoutFactory.createLinearLayout(context, mw, "h");
         uiBtns2.addView(ButtonFactory.createButton(context, mww, "ALBUM"));
         uiBtns2.addView(ButtonFactory.createButton(context, mww, "MUSIC"));
         frame.addView(uiBtns2);
 
-        LinearLayout uiBtns3 = LinearLayoutFactory.getLinearLayout(context, mw, "h");
+        LinearLayout uiBtns3 = LinearLayoutFactory.createLinearLayout(context, mw, "h");
         uiBtns3.addView(ButtonFactory.createButton(context, mww, "SMS"));
         uiBtns3.addView(ButtonFactory.createButton(context, mww, "MAIL"));
         frame.addView(uiBtns3);
 
-        LinearLayout uiBtns4 = LinearLayoutFactory.getLinearLayout(context, mw, "h");
+        LinearLayout uiBtns4 = LinearLayoutFactory.createLinearLayout(context, mw, "h");
         Button btDial = ButtonFactory.createButton(context, mww, "DIAL", "#51b6e1");
         btDial.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +81,7 @@ public class MemberDetail extends AppCompatActivity {
         uiBtns4.addView(ButtonFactory.createButton(context, mww, "CALL"));
         frame.addView(uiBtns4);
 
-        LinearLayout uiBtns5 = LinearLayoutFactory.getLinearLayout(context, mm);
+        LinearLayout uiBtns5 = LinearLayoutFactory.createLinearLayout(context, mm);
         Button btUpdate = ButtonFactory.createButton(context, mww, "UPDATE", "#51b6e1");
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override

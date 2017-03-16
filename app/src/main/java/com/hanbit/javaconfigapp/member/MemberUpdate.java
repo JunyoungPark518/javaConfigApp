@@ -18,7 +18,6 @@ import com.hanbit.javaconfigapp.itemfactory.LinearLayoutFactory;
 import com.hanbit.javaconfigapp.itemfactory.TextViewFactory;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class MemberUpdate extends AppCompatActivity {
     @Override
@@ -37,36 +36,36 @@ public class MemberUpdate extends AppCompatActivity {
         final String address = data.split(",")[4];
         final String salary = data.split(",")[5];
 
-        LinearLayout frame = LinearLayoutFactory.getLinearLayout(context, mww, "v");
-        LinearLayout uiName = LinearLayoutFactory.getLinearLayout(context, mw);
+        LinearLayout frame = LinearLayoutFactory.createLinearLayout(context, mww, "v");
+        LinearLayout uiName = LinearLayoutFactory.createLinearLayout(context, mw);
         uiName.addView(TextViewFactory.createTextView(context, ww, "NAME: ", 20));
         uiName.addView(TextViewFactory.createTextView(context, ww, name, 20));
         frame.addView(uiName);
 
-        LinearLayout llPhone = LinearLayoutFactory.getLinearLayout(context, mw);
+        LinearLayout llPhone = LinearLayoutFactory.createLinearLayout(context, mw);
         final EditText etPhoneContent = EditTextFactory.createEditText(context, ww, phone, 20);
         llPhone.addView(TextViewFactory.createTextView(context, ww, "PHONE: ", 20));
         llPhone.addView(etPhoneContent);
         frame.addView(llPhone);
 
-        LinearLayout llAge = LinearLayoutFactory.getLinearLayout(context, mw);
+        LinearLayout llAge = LinearLayoutFactory.createLinearLayout(context, mw);
         llAge.addView(TextViewFactory.createTextView(context, ww, "AGE: ", 20));
         llAge.addView(TextViewFactory.createTextView(context, ww, age, 20));
         frame.addView(llAge);
 
-        LinearLayout llAddress = LinearLayoutFactory.getLinearLayout(context, mw);
+        LinearLayout llAddress = LinearLayoutFactory.createLinearLayout(context, mw);
         final EditText etAddressContent = EditTextFactory.createEditText(context, ww, address, 20);
         llAddress.addView(TextViewFactory.createTextView(context, ww, "ADDRESS: ", 20));
         llAddress.addView(etAddressContent);
         frame.addView(llAddress);
 
-        LinearLayout llSalary = LinearLayoutFactory.getLinearLayout(context, mw);
+        LinearLayout llSalary = LinearLayoutFactory.createLinearLayout(context, mw);
         final EditText etSalaryContent = EditTextFactory.createEditText(context, ww, salary, 20);
         llSalary.addView(TextViewFactory.createTextView(context, ww, "SALARY: ", 20));
         llSalary.addView(etSalaryContent);
         frame.addView(llSalary);
 
-        LinearLayout llButton = LinearLayoutFactory.getLinearLayout(context, mw);
+        LinearLayout llButton = LinearLayoutFactory.createLinearLayout(context, mw);
         Button btCancel = ButtonFactory.createButton(context, mww, "CANCEL", 20);
         Button btConfirm = ButtonFactory.createButton(context, mww, "CONFIRM", 20);
         llButton.addView(btCancel);
@@ -74,11 +73,10 @@ public class MemberUpdate extends AppCompatActivity {
         frame.addView(llButton);
 
         setContentView(frame);
-
+        final HashMap<String,String> map = new HashMap<>();
         final IUpdate service=new IUpdate() {
             @Override
-            public void update(Object o) {
-                Map<String, String> map = (Map<String, String>) o;
+            public void update() {
                 new UpdateDAO(context).execQuery(String.format("UPDATE Member SET phone='%s',address='%s',salary='%s' WHERE _id='%s'",
                         map.get("phone").equals("") ? phone : (String) map.get("phone"),
                         map.get("address").equals("") ? address : (String) map.get("address"),
@@ -90,11 +88,10 @@ public class MemberUpdate extends AppCompatActivity {
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String,String> map = new HashMap<>();
                 map.put("phone",etPhoneContent.getText().toString());
                 map.put("address",etAddressContent.getText().toString());
                 map.put("salary",etSalaryContent.getText().toString());
-                service.update(map);
+                service.update();
                 Intent intent=new Intent(context, MemberDetail.class);
                 intent.putExtra("id",id);
                 startActivity(intent);
@@ -104,7 +101,9 @@ public class MemberUpdate extends AppCompatActivity {
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, MemberDetail.class));
+                Intent it = new Intent(context, MemberDetail.class);
+                it.putExtra("id",id);
+                startActivity(it);
             }
         });
 

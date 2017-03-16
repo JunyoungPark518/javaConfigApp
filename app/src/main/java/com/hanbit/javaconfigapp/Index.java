@@ -27,7 +27,7 @@ public class Index extends AppCompatActivity {
         LinearLayout.LayoutParams mw = LayoutParamsFactory.createLayoutParams("mw");
 
         int[] llMarginArr = {0, 200, 0, 0};
-        LinearLayout ui = LinearLayoutFactory.getLinearLayout(context, mm, "v", llMarginArr);
+        LinearLayout ui = LinearLayoutFactory.createLinearLayout(context, mm, "v", llMarginArr);
         TextView tv = TextViewFactory.createTextView(context, mw, "HELLO", 30);
         ui.addView(tv);
         int[] btnMarginArr = {0, 300, 0, 0};

@@ -5,5 +5,5 @@ package com.hanbit.javaconfigapp.action;
  */
 
 public interface IUpdate {
-    public void update(Object o);
+    public void update();
 }

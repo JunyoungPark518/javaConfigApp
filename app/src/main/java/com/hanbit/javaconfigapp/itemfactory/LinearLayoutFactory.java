@@ -34,13 +34,13 @@ public class LinearLayoutFactory {
         return ll;
     }
 
-    public static LinearLayout getLinearLayout(Context context, LinearLayout.LayoutParams layoutParams) {
+    public static LinearLayout createLinearLayout(Context context, LinearLayout.LayoutParams layoutParams) {
         LinearLayout ll = new LinearLayout(context);
         ll.setLayoutParams(layoutParams);
         return ll;
     }
 
-    public static LinearLayout getLinearLayout(Context context, LinearLayout.LayoutParams layoutParams, String orientation) {
+    public static LinearLayout createLinearLayout(Context context, LinearLayout.LayoutParams layoutParams, String orientation) {
         LinearLayout ll = new LinearLayout(context);
         ll.setLayoutParams(layoutParams);
         switch (orientation) {
@@ -54,7 +54,7 @@ public class LinearLayoutFactory {
         return ll;
     }
 
-    public static LinearLayout getLinearLayout(Context context, LinearLayout.LayoutParams layoutParams, String orientation, int[] margin) {
+    public static LinearLayout createLinearLayout(Context context, LinearLayout.LayoutParams layoutParams, String orientation, int[] margin) {
         LinearLayout ll = new LinearLayout(context);
         ViewGroup.MarginLayoutParams llMargin = new ViewGroup.MarginLayoutParams(layoutParams);
         llMargin.setMargins(margin[0], margin[1], margin[2], margin[3]);
