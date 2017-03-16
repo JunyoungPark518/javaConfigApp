@@ -1,4 +1,4 @@
-package com.hanbit.javaconfigapp.itemfactory;
+package com.hanbit.javaconfigapp.composite;
 
 import android.view.ViewGroup;
 import android.widget.LinearLayout;

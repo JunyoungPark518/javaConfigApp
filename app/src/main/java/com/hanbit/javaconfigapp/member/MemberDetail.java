@@ -13,13 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hanbit.javaconfigapp.action.IDetail;
+import com.hanbit.javaconfigapp.composite.CompositeCompo;
 import com.hanbit.javaconfigapp.factory.ReadQuery;
-import com.hanbit.javaconfigapp.itemfactory.ButtonFactory;
-import com.hanbit.javaconfigapp.itemfactory.LayoutParamsFactory;
-import com.hanbit.javaconfigapp.itemfactory.LinearLayoutFactory;
-import com.hanbit.javaconfigapp.itemfactory.TextViewFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MemberDetail extends AppCompatActivity {
@@ -28,13 +26,9 @@ public class MemberDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Context context = MemberDetail.this;
+        setContentView((LinearLayout) init(context).get("llDetailFrame"));
         final String id = this.getIntent().getExtras().getString("id").toString();
-        LinearLayout.LayoutParams mm = LayoutParamsFactory.createLayoutParams("mm");
-        LinearLayout.LayoutParams mw = LayoutParamsFactory.createLayoutParams("mw");
-        LinearLayout.LayoutParams mww = LayoutParamsFactory.createLayoutParams("mw", 1);
-        LinearLayout frame = LinearLayoutFactory.createLinearLayout(context, mm, "v");
-        TextView tvDetail = TextViewFactory.createTextView(context, mw, "상세", 30, "center");
-        frame.addView(tvDetail);
+
         IDetail service = new IDetail() {
             @Override
             public List<?> detail(String id) {
@@ -43,47 +37,22 @@ public class MemberDetail extends AppCompatActivity {
         };
 
         final ArrayList<String> member= (ArrayList<String>) service.detail(id);
-        LinearLayout uiSub = LinearLayoutFactory.createLinearLayout(context, mw, "v");
-        uiSub.addView(TextViewFactory.createTextView(context, mw, "NAME: " + member.get(1), 25, "left"));
-        uiSub.addView(TextViewFactory.createTextView(context, mw, "PHONE: " + member.get(2), 25, "left"));
-        uiSub.addView(TextViewFactory.createTextView(context, mw, "AGE: " + member.get(3), 25, "left"));
-        uiSub.addView(TextViewFactory.createTextView(context, mw, "ADDRESS: " + member.get(4), 25, "left"));
-        uiSub.addView(TextViewFactory.createTextView(context, mw, "SALARY: " + member.get(5), 25, "left"));
-        frame.addView(uiSub);
-
-        LinearLayout uiBtns = LinearLayoutFactory.createLinearLayout(context, mw, "h");
-        uiBtns.addView(ButtonFactory.createButton(context, mww, "MY LOCATION"));
-        uiBtns.addView(ButtonFactory.createButton(context, mww, "GOOGLE MAP"));
-        frame.addView(uiBtns);
-
-        LinearLayout uiBtns2 = LinearLayoutFactory.createLinearLayout(context, mw, "h");
-        uiBtns2.addView(ButtonFactory.createButton(context, mww, "ALBUM"));
-        uiBtns2.addView(ButtonFactory.createButton(context, mww, "MUSIC"));
-        frame.addView(uiBtns2);
-
-        LinearLayout uiBtns3 = LinearLayoutFactory.createLinearLayout(context, mw, "h");
-        uiBtns3.addView(ButtonFactory.createButton(context, mww, "SMS"));
-        uiBtns3.addView(ButtonFactory.createButton(context, mww, "MAIL"));
-        frame.addView(uiBtns3);
-
-        LinearLayout uiBtns4 = LinearLayoutFactory.createLinearLayout(context, mw, "h");
-        Button btDial = ButtonFactory.createButton(context, mww, "DIAL", "#51b6e1");
-        btDial.setOnClickListener(new View.OnClickListener() {
+        ((TextView) init(context).get("tvDetailName")).setText("NAME: " + member.get(1));
+        ((TextView) init(context).get("tvDetailName")).setText("PHONE: " + member.get(2));
+        ((TextView) init(context).get("tvDetailName")).setText("AGE: " + member.get(3));
+        ((TextView) init(context).get("tvDetailName")).setText("ADDRESS: " + member.get(4));
+        ((TextView) init(context).get("tvDetailName")).setText("SALARY: " + member.get(5));
+        Button btnDetailDial = (Button) init(context).get("btnDetailDial");
+        btnDetailDial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: "+member.get(2)));
-
                 it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(it);
             }
         });
-        uiBtns4.addView(btDial);
-        uiBtns4.addView(ButtonFactory.createButton(context, mww, "CALL"));
-        frame.addView(uiBtns4);
-
-        LinearLayout uiBtns5 = LinearLayoutFactory.createLinearLayout(context, mm);
-        Button btUpdate = ButtonFactory.createButton(context, mww, "UPDATE", "#51b6e1");
-        btUpdate.setOnClickListener(new View.OnClickListener() {
+        Button btnDetailUpdate = (Button) init(context).get("btnDetailUpdate");
+        btnDetailUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(context, MemberUpdate.class);
@@ -92,17 +61,14 @@ public class MemberDetail extends AppCompatActivity {
                 startActivity(it);
             }
         });
-        uiBtns5.addView(btUpdate);
-        Button btList = ButtonFactory.createButton(context, mww, "LIST", "#51b6e1");
-        btList.setOnClickListener(new View.OnClickListener() {
+        Button btnDetailList = (Button) init(context).get("btnDetailList");
+        btnDetailList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(context, MemberList.class));
             }
         });
-        uiBtns5.addView(btList);
-        frame.addView(uiBtns5);
-        setContentView(frame);
+
     }
     class DetailDAO extends ReadQuery {
         public DetailDAO(Context context) {
@@ -125,5 +91,12 @@ public class MemberDetail extends AppCompatActivity {
             }
             return members;
         }
+    }
+
+    public HashMap<?,?> init(Context context) {
+        CompositeCompo compo = new CompositeCompo(context, "MemberDetail");
+        compo.execute();
+        setContentView(compo.getFrame());
+        return compo.getComponents();
     }
 }

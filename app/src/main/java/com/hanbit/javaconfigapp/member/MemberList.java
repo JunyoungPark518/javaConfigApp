@@ -22,11 +22,12 @@ import android.widget.TextView;
 import com.hanbit.javaconfigapp.R;
 import com.hanbit.javaconfigapp.action.IDelete;
 import com.hanbit.javaconfigapp.action.IList;
+import com.hanbit.javaconfigapp.composite.CompositeCompo;
+import com.hanbit.javaconfigapp.composite.LayoutParamsFactory;
+import com.hanbit.javaconfigapp.composite.LinearLayoutFactory;
+import com.hanbit.javaconfigapp.composite.TextViewFactory;
 import com.hanbit.javaconfigapp.factory.ReadQuery;
 import com.hanbit.javaconfigapp.factory.WriteQuery;
-import com.hanbit.javaconfigapp.itemfactory.LayoutParamsFactory;
-import com.hanbit.javaconfigapp.itemfactory.LinearLayoutFactory;
-import com.hanbit.javaconfigapp.itemfactory.TextViewFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,14 +45,9 @@ public class MemberList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Context context = MemberList.this;
-        LinearLayout.LayoutParams mm = LayoutParamsFactory.createLayoutParams("mm");
-        LinearLayout ui = LinearLayoutFactory.createLinearLayout(context, mm);
-        final ListView listView = new ListView(context);
+        setContentView((LinearLayout) init(context).get("llIndex"));
+        final ListView listView = (ListView) init(context).get("lvMemberList");
         final HashMap<String, String> map = new HashMap<>();
-
-        listView.setLayoutParams(LayoutParamsFactory.createLayoutParams("mm"));
-        ui.addView(listView);
-        setContentView(ui);
 
         IList service = new IList() {
             @Override
@@ -59,6 +55,7 @@ public class MemberList extends AppCompatActivity {
                 return new ListDAO(context).list("SELECT _id AS id, name, phone, age, address, salary FROM Member;");
             }
         };
+
         final ArrayList<Map<String,String>> memberMap = (ArrayList<Map<String, String>>) service.list();
         listView.setAdapter(new MemberAdapter(memberMap,context));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,7 +66,6 @@ public class MemberList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -91,14 +87,7 @@ public class MemberList extends AppCompatActivity {
                                 service.delete();
                             }
                         }
-                ).setNegativeButton(
-                        android.R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        }
-                ).show();
+                ).setNegativeButton(android.R.string.no, null).show();
                 return false;
             }
         });
@@ -201,5 +190,12 @@ public class MemberList extends AppCompatActivity {
     static class ViewHolder{
         ImageView profileImg;
         TextView tvName,tvPhone;
+    }
+
+    public HashMap<?,?> init(Context context) {
+        CompositeCompo compo = new CompositeCompo(context, "MemberList");
+        compo.execute();
+        setContentView(compo.getFrame());
+        return compo.getComponents();
     }
 }

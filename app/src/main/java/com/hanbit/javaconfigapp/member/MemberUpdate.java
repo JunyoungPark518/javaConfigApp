@@ -10,12 +10,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.hanbit.javaconfigapp.action.IUpdate;
+import com.hanbit.javaconfigapp.composite.ButtonFactory;
+import com.hanbit.javaconfigapp.composite.CompositeCompo;
+import com.hanbit.javaconfigapp.composite.EditTextFactory;
+import com.hanbit.javaconfigapp.composite.LayoutParamsFactory;
+import com.hanbit.javaconfigapp.composite.LinearLayoutFactory;
+import com.hanbit.javaconfigapp.composite.TextViewFactory;
 import com.hanbit.javaconfigapp.factory.WriteQuery;
-import com.hanbit.javaconfigapp.itemfactory.ButtonFactory;
-import com.hanbit.javaconfigapp.itemfactory.EditTextFactory;
-import com.hanbit.javaconfigapp.itemfactory.LayoutParamsFactory;
-import com.hanbit.javaconfigapp.itemfactory.LinearLayoutFactory;
-import com.hanbit.javaconfigapp.itemfactory.TextViewFactory;
 
 import java.util.HashMap;
 
@@ -119,5 +120,12 @@ public class MemberUpdate extends AppCompatActivity {
             super.getDatabase().execSQL(sql);
         }
 
+    }
+
+    public HashMap<?,?> init(Context context) {
+        CompositeCompo compo = new CompositeCompo(context, "MemberUpdate");
+        compo.execute();
+        setContentView(compo.getFrame());
+        return compo.getComponents();
     }
 }
