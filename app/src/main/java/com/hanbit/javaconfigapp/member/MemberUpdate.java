@@ -10,12 +10,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.hanbit.javaconfigapp.action.IUpdate;
-import com.hanbit.javaconfigapp.composite.ButtonFactory;
 import com.hanbit.javaconfigapp.composite.CompositeCompo;
-import com.hanbit.javaconfigapp.composite.EditTextFactory;
-import com.hanbit.javaconfigapp.composite.LayoutParamsFactory;
-import com.hanbit.javaconfigapp.composite.LinearLayoutFactory;
-import com.hanbit.javaconfigapp.composite.TextViewFactory;
+import com.hanbit.javaconfigapp.composite.CompositeFactory;
 import com.hanbit.javaconfigapp.factory.WriteQuery;
 
 import java.util.HashMap;
@@ -25,9 +21,9 @@ public class MemberUpdate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = this.getIntent();
-        LinearLayout.LayoutParams mw = LayoutParamsFactory.createLayoutParams("mw");
-        LinearLayout.LayoutParams ww = LayoutParamsFactory.createLayoutParams("ww");
-        LinearLayout.LayoutParams mww = LayoutParamsFactory.createLayoutParams("mw", 1);
+        LinearLayout.LayoutParams mw = CompositeFactory.createLayoutParams("mw");
+        LinearLayout.LayoutParams ww = CompositeFactory.createLayoutParams("ww");
+        LinearLayout.LayoutParams mww = CompositeFactory.createLayoutParams("mw", 1);
         final Context context= MemberUpdate.this;
         final String data = intent.getExtras().getString("data").toString();
         final String id = data.split(",")[0];
@@ -37,38 +33,38 @@ public class MemberUpdate extends AppCompatActivity {
         final String address = data.split(",")[4];
         final String salary = data.split(",")[5];
 
-        LinearLayout frame = LinearLayoutFactory.createLinearLayout(context, mww, "v");
-        LinearLayout uiName = LinearLayoutFactory.createLinearLayout(context, mw);
-        uiName.addView(TextViewFactory.createTextView(context, ww, "NAME: ", 20));
-        uiName.addView(TextViewFactory.createTextView(context, ww, name, 20));
+        LinearLayout frame = CompositeFactory.createLinearLayout(context, mww, "v");
+        LinearLayout uiName = CompositeFactory.createLinearLayout(context, mw);
+        uiName.addView(CompositeFactory.createTextView(context, ww, "NAME: ", 20));
+        uiName.addView(CompositeFactory.createTextView(context, ww, name, 20));
         frame.addView(uiName);
 
-        LinearLayout llPhone = LinearLayoutFactory.createLinearLayout(context, mw);
-        final EditText etPhoneContent = EditTextFactory.createEditText(context, ww, phone, 20);
-        llPhone.addView(TextViewFactory.createTextView(context, ww, "PHONE: ", 20));
+        LinearLayout llPhone = CompositeFactory.createLinearLayout(context, mw);
+        final EditText etPhoneContent = CompositeFactory.createEditText(context, ww, phone, 20);
+        llPhone.addView(CompositeFactory.createTextView(context, ww, "PHONE: ", 20));
         llPhone.addView(etPhoneContent);
         frame.addView(llPhone);
 
-        LinearLayout llAge = LinearLayoutFactory.createLinearLayout(context, mw);
-        llAge.addView(TextViewFactory.createTextView(context, ww, "AGE: ", 20));
-        llAge.addView(TextViewFactory.createTextView(context, ww, age, 20));
+        LinearLayout llAge = CompositeFactory.createLinearLayout(context, mw);
+        llAge.addView(CompositeFactory.createTextView(context, ww, "AGE: ", 20));
+        llAge.addView(CompositeFactory.createTextView(context, ww, age, 20));
         frame.addView(llAge);
 
-        LinearLayout llAddress = LinearLayoutFactory.createLinearLayout(context, mw);
-        final EditText etAddressContent = EditTextFactory.createEditText(context, ww, address, 20);
-        llAddress.addView(TextViewFactory.createTextView(context, ww, "ADDRESS: ", 20));
+        LinearLayout llAddress = CompositeFactory.createLinearLayout(context, mw);
+        final EditText etAddressContent = CompositeFactory.createEditText(context, ww, address, 20);
+        llAddress.addView(CompositeFactory.createTextView(context, ww, "ADDRESS: ", 20));
         llAddress.addView(etAddressContent);
         frame.addView(llAddress);
 
-        LinearLayout llSalary = LinearLayoutFactory.createLinearLayout(context, mw);
-        final EditText etSalaryContent = EditTextFactory.createEditText(context, ww, salary, 20);
-        llSalary.addView(TextViewFactory.createTextView(context, ww, "SALARY: ", 20));
+        LinearLayout llSalary = CompositeFactory.createLinearLayout(context, mw);
+        final EditText etSalaryContent = CompositeFactory.createEditText(context, ww, salary, 20);
+        llSalary.addView(CompositeFactory.createTextView(context, ww, "SALARY: ", 20));
         llSalary.addView(etSalaryContent);
         frame.addView(llSalary);
 
-        LinearLayout llButton = LinearLayoutFactory.createLinearLayout(context, mw);
-        Button btCancel = ButtonFactory.createButton(context, mww, "CANCEL", 20);
-        Button btConfirm = ButtonFactory.createButton(context, mww, "CONFIRM", 20);
+        LinearLayout llButton = CompositeFactory.createLinearLayout(context, mw);
+        Button btCancel = CompositeFactory.createButton(context, mww, "CANCEL", 20);
+        Button btConfirm = CompositeFactory.createButton(context, mww, "CONFIRM", 20);
         llButton.addView(btCancel);
         llButton.addView(btConfirm);
         frame.addView(llButton);

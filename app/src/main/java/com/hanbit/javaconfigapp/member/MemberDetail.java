@@ -26,22 +26,25 @@ public class MemberDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Context context = MemberDetail.this;
-        setContentView((LinearLayout) init(context).get("llDetailFrame"));
         final String id = this.getIntent().getExtras().getString("id").toString();
-
+        setContentView((LinearLayout) init(context).get("llDetailFrame"));
         IDetail service = new IDetail() {
             @Override
             public List<?> detail(String id) {
                 return new DetailDAO(context).list("SELECT _id AS id, name, phone, age, address, salary FROM Member WHERE _id='"+id+"';");
             }
         };
-
         final ArrayList<String> member= (ArrayList<String>) service.detail(id);
-        ((TextView) init(context).get("tvDetailName")).setText("NAME: " + member.get(1));
-        ((TextView) init(context).get("tvDetailName")).setText("PHONE: " + member.get(2));
-        ((TextView) init(context).get("tvDetailName")).setText("AGE: " + member.get(3));
-        ((TextView) init(context).get("tvDetailName")).setText("ADDRESS: " + member.get(4));
-        ((TextView) init(context).get("tvDetailName")).setText("SALARY: " + member.get(5));
+        TextView tv1 = (TextView) init(context).get("tvDetailName");
+        tv1.setText("NAME: " + member.get(1));
+        TextView tv2 = (TextView) init(context).get("tvDetailPhone");
+        tv2.setText("PHONE: " + member.get(2));
+        TextView tv3 = (TextView) init(context).get("tvDetailAge");
+        tv3.setText("AGE: " + member.get(3));
+        TextView tv4 = (TextView) init(context).get("tvDetailAddress");
+        tv4.setText("ADDRESS: " + member.get(4));
+        TextView tv5 = (TextView) init(context).get("tvDetailSalary");
+        tv5.setText("SALARY: " + member.get(5));
         Button btnDetailDial = (Button) init(context).get("btnDetailDial");
         btnDetailDial.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +71,6 @@ public class MemberDetail extends AppCompatActivity {
                 startActivity(new Intent(context, MemberList.class));
             }
         });
-
     }
     class DetailDAO extends ReadQuery {
         public DetailDAO(Context context) {

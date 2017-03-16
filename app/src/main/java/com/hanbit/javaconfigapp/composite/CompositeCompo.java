@@ -54,36 +54,34 @@ public class CompositeCompo {
                 break;
             case "MemberDetail":
                 frame = (LinearLayout) map.get("llDetailFrame");
-
-                frame.addView((TextView) map.get("tvDetailName"));
-//                frame.addView((TextView) map.get("tvDetail"));
-//                LinearLayout temp = (LinearLayout) map.get("llDetailSub");
-//                temp.addView((TextView) map.get("tvDetailName"));
-//                temp.addView((TextView) map.get("tvDetailPhone"));
-//                temp.addView((TextView) map.get("tvDetailAge"));
-//                temp.addView((TextView) map.get("tvDetailAddress"));
-//                temp.addView((TextView) map.get("tvDetailSalary"));
-//                frame.addView(temp);
-//                LinearLayout temp1 = (LinearLayout) map.get("llDetailBtns");
-//                temp1.addView((Button) map.get("btnDetailMyLocation"));
-//                temp1.addView((Button) map.get("btnDetailGoogleMap"));
-//                frame.addView(temp1);
-//                LinearLayout temp2 = (LinearLayout) map.get("llDetailBtns");
-//                temp2.addView((Button) map.get("btnDetailAlbum"));
-//                temp2.addView((Button) map.get("btnDetailMusic"));
-//                frame.addView(temp2);
-//                LinearLayout temp3 = (LinearLayout) map.get("llDetailBtns");
-//                temp3.addView((Button) map.get("btnDetailSMS"));
-//                temp3.addView((Button) map.get("btnDetailMail"));
-//                frame.addView(temp3);
-//                LinearLayout temp4 = (LinearLayout) map.get("llDetailBtns");
-//                temp4.addView((Button) map.get("btnDetailDial"));
-//                temp4.addView((Button) map.get("btnDetailCall"));
-//                frame.addView(temp4);
-//                LinearLayout temp5 = (LinearLayout) map.get("llDetailBtns");
-//                temp5.addView((Button) map.get("btnDetailUpdate"));
-//                temp5.addView((Button) map.get("btnDetailList"));
-//                frame.addView(temp5);
+                frame.addView((TextView) map.get("tvDetail"));
+                LinearLayout temp = (LinearLayout) map.get("llDetailSub");
+                temp.addView((TextView) map.get("tvDetailName"));
+                temp.addView((TextView) map.get("tvDetailPhone"));
+                temp.addView((TextView) map.get("tvDetailAge"));
+                temp.addView((TextView) map.get("tvDetailAddress"));
+                temp.addView((TextView) map.get("tvDetailSalary"));
+                frame.addView(temp);
+                LinearLayout temp1 = (LinearLayout) map.get("llDetailBtns1");
+                temp1.addView((Button) map.get("btnDetailMyLocation"));
+                temp1.addView((Button) map.get("btnDetailGoogleMap"));
+                frame.addView(temp1);
+                LinearLayout temp2 = (LinearLayout) map.get("llDetailBtns2");
+                temp2.addView((Button) map.get("btnDetailAlbum"));
+                temp2.addView((Button) map.get("btnDetailMusic"));
+                frame.addView(temp2);
+                LinearLayout temp3 = (LinearLayout) map.get("llDetailBtns3");
+                temp3.addView((Button) map.get("btnDetailSMS"));
+                temp3.addView((Button) map.get("btnDetailMail"));
+                frame.addView(temp3);
+                LinearLayout temp4 = (LinearLayout) map.get("llDetailBtns4");
+                temp4.addView((Button) map.get("btnDetailDial"));
+                temp4.addView((Button) map.get("btnDetailCall"));
+                frame.addView(temp4);
+                LinearLayout temp5 = (LinearLayout) map.get("llDetailBtns5");
+                temp5.addView((Button) map.get("btnDetailUpdate"));
+                temp5.addView((Button) map.get("btnDetailList"));
+                frame.addView(temp5);
                 break;
         }
 
@@ -134,11 +132,11 @@ public class CompositeCompo {
                         break;
                     case "MemberDetail":
                         map.put("tvDetail",CompositeFactory.createTextView(context, mw, "상세", 30, "center"));
-                        map.put("tvDetailName",CompositeFactory.createTextView(context, mw, "", 25, "left"));
-                        map.put("tvDetailPhone",CompositeFactory.createTextView(context, mw, "", 25, "left"));
-                        map.put("tvDetailAge",CompositeFactory.createTextView(context, mw, "", 25, "left"));
-                        map.put("tvDetailAddress",CompositeFactory.createTextView(context, mw, "", 25, "left"));
-                        map.put("tvDetailSalary",CompositeFactory.createTextView(context, mw, "", 25, "left"));
+                        map.put("tvDetailName",CompositeFactory.createTextView(context, mw, "Name:", 25, "left"));
+                        map.put("tvDetailPhone",CompositeFactory.createTextView(context, mw, "Phone:", 25, "left"));
+                        map.put("tvDetailAge",CompositeFactory.createTextView(context, mw, "Age:", 25, "left"));
+                        map.put("tvDetailAddress",CompositeFactory.createTextView(context, mw, "Address:", 25, "left"));
+                        map.put("tvDetailSalary",CompositeFactory.createTextView(context, mw, "Salary:", 25, "left"));
                         break;
                     case "Temp":
                         tv.setText("");
@@ -188,7 +186,11 @@ public class CompositeCompo {
                     case "MemberDetail":
                         map.put("llDetailFrame",CompositeFactory.createLinearLayout(context, mm, "v"));
                         map.put("llDetailSub",CompositeFactory.createLinearLayout(context, mw, "v"));
-                        map.put("llDetailBtns",CompositeFactory.createLinearLayout(context, mw, "h"));
+                        map.put("llDetailBtns1",CompositeFactory.createLinearLayout(context, mw, "h"));
+                        map.put("llDetailBtns2",CompositeFactory.createLinearLayout(context, mw, "h"));
+                        map.put("llDetailBtns3",CompositeFactory.createLinearLayout(context, mw, "h"));
+                        map.put("llDetailBtns4",CompositeFactory.createLinearLayout(context, mw, "h"));
+                        map.put("llDetailBtns5",CompositeFactory.createLinearLayout(context, mw, "h"));
                         break;
                 }
             }
