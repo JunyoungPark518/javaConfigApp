@@ -22,8 +22,8 @@ import android.widget.TextView;
 import com.hanbit.javaconfigapp.R;
 import com.hanbit.javaconfigapp.action.IDelete;
 import com.hanbit.javaconfigapp.action.IList;
+import com.hanbit.javaconfigapp.composite.Complex;
 import com.hanbit.javaconfigapp.composite.CompositeCompo;
-import com.hanbit.javaconfigapp.composite.CompositeFactory;
 import com.hanbit.javaconfigapp.factory.ReadQuery;
 import com.hanbit.javaconfigapp.factory.WriteQuery;
 
@@ -160,12 +160,12 @@ public class MemberList extends AppCompatActivity {
             LinearLayout uiItem;
             Context context = MemberList.this;
             if(v==null) {
-                uiItem = CompositeFactory.createLinearLayout(context, CompositeFactory.createLayoutParams("mm"));
+                uiItem = Complex.LinearLayoutFactory.create(context, Complex.LayoutParamsFactory.create("mm"));
                 uiItem.setPadding(8, 8, 8, 8);
                 ImageView profileImg = new ImageView(context);
                 profileImg.setLayoutParams(new ViewGroup.LayoutParams((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics()),(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics())));
-                TextView tvName = CompositeFactory.createTextView(context, CompositeFactory.createLayoutParams("ww"), "Name", "B", 20);
-                TextView tvPhone = CompositeFactory.createTextView(context, CompositeFactory.createLayoutParams("ww"), "Phone", 17);
+                TextView tvName = Complex.TextViewFactory.create(context, Complex.LayoutParamsFactory.create("ww"), "Name", "B", 20);
+                TextView tvPhone = Complex.TextViewFactory.create(context, Complex.LayoutParamsFactory.create("ww"), "Phone", 17);
                 uiItem.addView(profileImg);
                 uiItem.addView(tvName);
                 uiItem.addView(tvPhone);

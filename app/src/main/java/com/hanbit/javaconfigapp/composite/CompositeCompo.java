@@ -91,25 +91,25 @@ public class CompositeCompo {
         IComposite service = new IComposite() {
             @Override
             public void execute() {
-                LinearLayout.LayoutParams mww = CompositeFactory.createLayoutParams("mw", 1);
+                LinearLayout.LayoutParams mww = Complex.LayoutParamsFactory.create("mw", 1);
                 Button btn = new Button(context);
                 switch(order) {
                     case "Index" :
                         int[] btnMarginArr = {0, 300, 0, 0};
-                        btn = CompositeFactory.createButton(context, CompositeFactory.createLayoutParams("mw"), "Button", "#00ff00", btnMarginArr);
+                        btn = Complex.ButtonFactory.create(context, Complex.LayoutParamsFactory.create("mw"), "Button", "#00ff00", btnMarginArr);
                         map.put("btnIndex",btn);
                         break;
                     case "MemberDetail":
-                        map.put("btnDetailMyLocation",CompositeFactory.createButton(context, mww, "MY LOCATION"));
-                        map.put("btnDetailGoogleMap",CompositeFactory.createButton(context, mww, "GOOGLE MAP"));
-                        map.put("btnDetailAlbum",CompositeFactory.createButton(context, mww, "ALBUM"));
-                        map.put("btnDetailMusic",CompositeFactory.createButton(context, mww, "MUSIC"));
-                        map.put("btnDetailSMS",CompositeFactory.createButton(context, mww, "SMS"));
-                        map.put("btnDetailMail",CompositeFactory.createButton(context, mww, "MAIL"));
-                        map.put("btnDetailDial",CompositeFactory.createButton(context, mww, "DIAL", "#51b6e1"));
-                        map.put("btnDetailCall",CompositeFactory.createButton(context, mww, "CALL"));
-                        map.put("btnDetailUpdate",CompositeFactory.createButton(context, mww, "UPDATE", "#51b6e1"));
-                        map.put("btnDetailList",CompositeFactory.createButton(context, mww, "LIST", "#51b6e1"));
+                        map.put("btnDetailMyLocation", Complex.ButtonFactory.create(context, mww, "MY LOCATION"));
+                        map.put("btnDetailGoogleMap", Complex.ButtonFactory.create(context, mww, "GOOGLE MAP"));
+                        map.put("btnDetailAlbum", Complex.ButtonFactory.create(context, mww, "ALBUM"));
+                        map.put("btnDetailMusic", Complex.ButtonFactory.create(context, mww, "MUSIC"));
+                        map.put("btnDetailSMS", Complex.ButtonFactory.create(context, mww, "SMS"));
+                        map.put("btnDetailMail", Complex.ButtonFactory.create(context, mww, "MAIL"));
+                        map.put("btnDetailDial", Complex.ButtonFactory.create(context, mww, "DIAL", "#51b6e1"));
+                        map.put("btnDetailCall", Complex.ButtonFactory.create(context, mww, "CALL"));
+                        map.put("btnDetailUpdate", Complex.ButtonFactory.create(context, mww, "UPDATE", "#51b6e1"));
+                        map.put("btnDetailList", Complex.ButtonFactory.create(context, mww, "LIST", "#51b6e1"));
                         break;
                 }
             }
@@ -120,30 +120,30 @@ public class CompositeCompo {
         IComposite service = new IComposite() {
             @Override
             public void execute() {
-                LinearLayout.LayoutParams mw = CompositeFactory.createLayoutParams("mw");
+                LinearLayout.LayoutParams mw = Complex.LayoutParamsFactory.create("mw");
                 TextView tv = new TextView(context);
                 switch (order) {
                     case "Index":
-                        tv = CompositeFactory.createTextView(context, CompositeFactory.createLayoutParams("mw"), "HELLO", 30);
-                        ViewGroup.MarginLayoutParams marginIndex = new ViewGroup.MarginLayoutParams(CompositeFactory.createLayoutParams("mw"));
+                        tv = Complex.TextViewFactory.create(context, mw, "HELLO", 30);
+                        ViewGroup.MarginLayoutParams marginIndex = new ViewGroup.MarginLayoutParams(Complex.LayoutParamsFactory.create("mw"));
                         marginIndex.setMargins(0, 200, 0, 0);
                         tv.setLayoutParams(new LinearLayout.LayoutParams(marginIndex));
                         map.put("tvIndex",tv);
                         break;
                     case "MemberDetail":
-                        map.put("tvDetail",CompositeFactory.createTextView(context, mw, "상세", 30, "center"));
-                        map.put("tvDetailName",CompositeFactory.createTextView(context, mw, "Name:", 25, "left"));
-                        map.put("tvDetailPhone",CompositeFactory.createTextView(context, mw, "Phone:", 25, "left"));
-                        map.put("tvDetailAge",CompositeFactory.createTextView(context, mw, "Age:", 25, "left"));
-                        map.put("tvDetailAddress",CompositeFactory.createTextView(context, mw, "Address:", 25, "left"));
-                        map.put("tvDetailSalary",CompositeFactory.createTextView(context, mw, "Salary:", 25, "left"));
+                        map.put("tvDetail", Complex.TextViewFactory.create(context, mw, "상세", 30, "center"));
+                        map.put("tvDetailName", Complex.TextViewFactory.create(context, mw, "Name:", 25, "left"));
+                        map.put("tvDetailPhone", Complex.TextViewFactory.create(context, mw, "Phone:", 25, "left"));
+                        map.put("tvDetailAge", Complex.TextViewFactory.create(context, mw, "Age:", 25, "left"));
+                        map.put("tvDetailAddress", Complex.TextViewFactory.create(context, mw, "Address:", 25, "left"));
+                        map.put("tvDetailSalary", Complex.TextViewFactory.create(context, mw, "Salary:", 25, "left"));
                         break;
                     case "Temp":
                         tv.setText("");
                         tv.setGravity(Gravity.CENTER);
                         tv.setBackgroundColor(Color.parseColor("#FFFFFF"));
                         tv.setTextSize(30);
-                        ViewGroup.MarginLayoutParams marginTmp = new ViewGroup.MarginLayoutParams(CompositeFactory.createLayoutParams("mw"));
+                        ViewGroup.MarginLayoutParams marginTmp = new ViewGroup.MarginLayoutParams(mw);
                         marginTmp.setMargins(0, 200, 0, 0);
                         tv.setLayoutParams(new LinearLayout.LayoutParams(marginTmp));
                         map.put("tvTemp",tv);
@@ -161,7 +161,7 @@ public class CompositeCompo {
                 switch (order) {
                     case "Index":
                         et.setText("");
-                        et.setLayoutParams(CompositeFactory.createLayoutParams("mw"));
+                        et.setLayoutParams(Complex.LayoutParamsFactory.create("mw"));
                         map.put("etIndex",et);
                         break;
                 }
@@ -174,23 +174,23 @@ public class CompositeCompo {
         IComposite service = new IComposite() {
             @Override
             public void execute() {
-                LinearLayout.LayoutParams mm = CompositeFactory.createLayoutParams("mm");
-                LinearLayout.LayoutParams mw = CompositeFactory.createLayoutParams("mw");
+                LinearLayout.LayoutParams mm = Complex.LayoutParamsFactory.create("mm");
+                LinearLayout.LayoutParams mw = Complex.LayoutParamsFactory.create("mw");
                 LinearLayout ll;
                 switch (order) {
                     case "Index":case "MemberList":
                         int[] llMarginArr = {0, 200, 0, 0};
-                        ll = CompositeFactory.createLinearLayout(context, mm, "v", llMarginArr);
+                        ll = Complex.LinearLayoutFactory.create(context, mm, "v", llMarginArr);
                         map.put("llIndex",ll);
                         break;
                     case "MemberDetail":
-                        map.put("llDetailFrame",CompositeFactory.createLinearLayout(context, mm, "v"));
-                        map.put("llDetailSub",CompositeFactory.createLinearLayout(context, mw, "v"));
-                        map.put("llDetailBtns1",CompositeFactory.createLinearLayout(context, mw, "h"));
-                        map.put("llDetailBtns2",CompositeFactory.createLinearLayout(context, mw, "h"));
-                        map.put("llDetailBtns3",CompositeFactory.createLinearLayout(context, mw, "h"));
-                        map.put("llDetailBtns4",CompositeFactory.createLinearLayout(context, mw, "h"));
-                        map.put("llDetailBtns5",CompositeFactory.createLinearLayout(context, mw, "h"));
+                        map.put("llDetailFrame", Complex.LinearLayoutFactory.create(context, mm, "v"));
+                        map.put("llDetailSub", Complex.LinearLayoutFactory.create(context, mw, "v"));
+                        map.put("llDetailBtns1", Complex.LinearLayoutFactory.create(context, mw, "h"));
+                        map.put("llDetailBtns2", Complex.LinearLayoutFactory.create(context, mw, "h"));
+                        map.put("llDetailBtns3", Complex.LinearLayoutFactory.create(context, mw, "h"));
+                        map.put("llDetailBtns4", Complex.LinearLayoutFactory.create(context, mw, "h"));
+                        map.put("llDetailBtns5", Complex.LinearLayoutFactory.create(context, mw, "h"));
                         break;
                 }
             }
@@ -205,7 +205,7 @@ public class CompositeCompo {
                 switch(order) {
                     case "MemberList":
                         lv = new ListView(context);
-                        lv.setLayoutParams(CompositeFactory.createLayoutParams("mm"));
+                        lv.setLayoutParams(Complex.LayoutParamsFactory.create("mm"));
                         map.put("lvMemberList", lv);
                         break;
                 }

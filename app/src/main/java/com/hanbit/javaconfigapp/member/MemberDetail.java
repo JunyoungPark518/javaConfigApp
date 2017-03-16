@@ -27,7 +27,7 @@ public class MemberDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         final Context context = MemberDetail.this;
         final String id = this.getIntent().getExtras().getString("id").toString();
-        setContentView((LinearLayout) init(context).get("llDetailFrame"));
+
         IDetail service = new IDetail() {
             @Override
             public List<?> detail(String id) {
@@ -71,6 +71,8 @@ public class MemberDetail extends AppCompatActivity {
                 startActivity(new Intent(context, MemberList.class));
             }
         });
+
+        setContentView((LinearLayout) init(context).get("llDetailFrame"));
     }
     class DetailDAO extends ReadQuery {
         public DetailDAO(Context context) {
@@ -98,7 +100,6 @@ public class MemberDetail extends AppCompatActivity {
     public HashMap<?,?> init(Context context) {
         CompositeCompo compo = new CompositeCompo(context, "MemberDetail");
         compo.execute();
-        setContentView(compo.getFrame());
         return compo.getComponents();
     }
 }
