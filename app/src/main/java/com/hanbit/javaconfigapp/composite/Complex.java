@@ -175,6 +175,21 @@ public class Complex {
             return ll;
         }
 
+        public static LinearLayout create(Context context, LinearLayout.LayoutParams layoutParams, String orientation, float weight) {
+            LinearLayout ll = new LinearLayout(context);
+            ll.setLayoutParams(layoutParams);
+            switch (orientation) {
+                case "v":case "vertical":
+                    ll.setOrientation(LinearLayout.VERTICAL);
+                    break;
+                case "h":case "horizontal":
+                    ll.setOrientation(LinearLayout.HORIZONTAL);
+                    break;
+            }
+            ll.setWeightSum(weight);
+            return ll;
+        }
+
         public static LinearLayout create(Context context, LinearLayout.LayoutParams layoutParams, String orientation, String bgColor) {
             LinearLayout ll = new LinearLayout(context);
             ll.setLayoutParams(layoutParams);
@@ -233,6 +248,27 @@ public class Complex {
                     tv.setGravity(2);
                     break;
             }
+            return tv;
+        }
+
+        public static TextView create(Context context, LinearLayout.LayoutParams layoutParams, String text, int textSize, String gravity, String bgColor, String textColor) {
+            TextView tv = new TextView(context);
+            tv.setLayoutParams(layoutParams);
+            tv.setText(text);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize);
+            switch (gravity) {
+                case "left":
+                    tv.setGravity(0);
+                    break;
+                case "center":
+                    tv.setGravity(1);
+                    break;
+                case "right":
+                    tv.setGravity(2);
+                    break;
+            }
+            tv.setBackgroundColor(Color.parseColor(bgColor));
+            tv.setTextColor(Color.parseColor(textColor));
             return tv;
         }
 

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MessageWrite extends AppCompatActivity {
+    String temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +35,17 @@ public class MessageWrite extends AppCompatActivity {
         LinearLayout.LayoutParams mm = Complex.LayoutParamsFactory.create("mm");
         LinearLayout frame = Complex.LinearLayoutFactory.create(context, mm);
         WebView wv = Complex.WebViewFactory.create(context, mm, "file:///android_asset/www/html/messageWrite.html");
+
         wv.addJavascriptInterface(new JavascriptInterface(){
             @android.webkit.JavascriptInterface
             @Override
             public void showToast(String message) {
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, temp, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void sendMessage(String message) {
+                temp = message;
             }
         }, "Hybrid");
         frame.addView(wv);
@@ -58,6 +65,7 @@ public class MessageWrite extends AppCompatActivity {
 
     public interface JavascriptInterface {
         public void showToast(String message);
+        public void sendMessage(String message);
     }
 
     class ListDAO extends ReadQuery {

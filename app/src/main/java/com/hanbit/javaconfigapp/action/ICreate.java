@@ -5,5 +5,5 @@ package com.hanbit.javaconfigapp.action;
  */
 
 public interface ICreate {
-    public void create(Object o);
+    public void create();
 }

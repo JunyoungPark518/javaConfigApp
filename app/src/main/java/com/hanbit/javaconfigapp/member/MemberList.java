@@ -14,13 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hanbit.javaconfigapp.Index;
 import com.hanbit.javaconfigapp.R;
-import com.hanbit.javaconfigapp.action.ICreate;
 import com.hanbit.javaconfigapp.action.IDelete;
 import com.hanbit.javaconfigapp.action.IList;
 import com.hanbit.javaconfigapp.composite.Complex;
@@ -44,7 +45,8 @@ public class MemberList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Context context = MemberList.this;
-        final ListView listView = (ListView) init(context).get("lvMemberList");
+        HashMap<String, Object> view = (HashMap<String, Object>) init(context);
+        final ListView listView = (ListView) view.get("lvMemberList");
         final HashMap<String, String> map = new HashMap<>();
         IList service = new IList() {
             @Override
@@ -54,27 +56,32 @@ public class MemberList extends AppCompatActivity {
         };
 
         final ArrayList<Map<String,String>> memberMap = (ArrayList<Map<String, String>>) service.list();
+        TextView tvFriends = (TextView) view.get("tvMemberListFriend");
+        tvFriends.setText("Friends " + memberMap.size());
+        Button btnBack = (Button) view.get("btnMemberListBack");
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, Index.class));
+            }
+        });
+        Button memberAdd = (Button) view.get("btnMemberListAdd");
+        memberAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, MemberAdd.class));
+            }
+        });
         listView.setAdapter(new MemberAdapter(memberMap,context));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int i, long l) {
-                Intent intent=new Intent(context,MemberDetail.class);
-                intent.putExtra("id",memberMap.get(i).get("id"));
+                Intent intent = new Intent(context, MemberDetail.class);
+                intent.putExtra("id", memberMap.get(i).get("id"));
                 startActivity(intent);
             }
         });
 
-        ICreate cService = new ICreate() {
-            @Override
-            public void create(Object o) {
-                Intent it = new Intent(context, MemberAdd.class);
-
-                startActivity(it);
-            }
-        };
-
-//        final TextView tvFriends = (TextView) init(context).get("tvMemberListFriend");
-//        tvFriends.setText("Friends " + memberMap.size());
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View v, int i, long l) {

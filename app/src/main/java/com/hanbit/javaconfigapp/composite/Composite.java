@@ -54,7 +54,7 @@ public class Composite {
             case "MemberList":
                 frame = (LinearLayout) map.get("llMemberListFrame");
                 LinearLayout head = (LinearLayout) map.get("llMemberListHead");
-                head.addView((Button) map.get("btnMemberListManage"));
+                head.addView((Button) map.get("btnMemberListBack"));
                 head.addView((TextView) map.get("tvMemberListFriend"));
                 head.addView((Button) map.get("btnMemberListAdd"));
                 frame.addView(head);
@@ -96,6 +96,10 @@ public class Composite {
                 break;
             case "MemberUpdate":
                 frame = (LinearLayout) map.get("llUpdateFrame");
+                LinearLayout button = (LinearLayout) map.get("llUpdateButton");
+                button.addView((Button) map.get("btnUpdateCancel"));
+                button.addView((Button) map.get("btnUpdateConfirm"));
+                frame.addView(button);
                 LinearLayout name = (LinearLayout) map.get("llUpdateName");
                 name.addView((TextView) map.get("tvUpdateName"));
                 name.addView((EditText) map.get("etUpdateNameContent"));
@@ -116,10 +120,20 @@ public class Composite {
                 salary.addView((TextView) map.get("tvUpdateSalary"));
                 salary.addView((EditText) map.get("etUpdateSalaryContent"));
                 frame.addView(salary);
-                LinearLayout button = (LinearLayout) map.get("llUpdateButton");
-                button.addView((Button) map.get("btnUpdateCancel"));
-                button.addView((Button) map.get("btnUpdateConfirm"));
-                frame.addView(button);
+                break;
+            case "MemberAdd":
+                frame = (LinearLayout) map.get("llAddFrame");
+                LinearLayout buttonAdd = (LinearLayout) map.get("llAddButton");
+                buttonAdd.addView((Button) map.get("btnAddCancel"));
+                buttonAdd.addView((Button) map.get("btnAddConfirm"));
+                frame.addView(buttonAdd);
+                LinearLayout listAdd = (LinearLayout) map.get("llAddList");
+                listAdd.addView((EditText) map.get("etAddName"));
+                listAdd.addView((EditText) map.get("etAddPhone"));
+                listAdd.addView((EditText) map.get("etAddAge"));
+                listAdd.addView((EditText) map.get("etAddAddress"));
+                listAdd.addView((EditText) map.get("etAddSalary"));
+                frame.addView(listAdd);
                 break;
             case "MessageWrite":
                 frame = (LinearLayout) map.get("llMsgWriteFrame");
@@ -151,10 +165,10 @@ public class Composite {
                         map.put("btnIndexHTML", Complex.ButtonFactory.create(context, mw, "GO HTML", "#AAE100"));
                         break;
                     case "MemberList":
-                        Button btnMemberListManage = Complex.ButtonFactory.create(context, mww, "Manage", "#725253");
+                        Button btnMemberListManage = Complex.ButtonFactory.create(context, mww, "BACK", "#625253");
                         btnMemberListManage.setTextColor(Color.parseColor("#ffffff"));
-                        map.put("btnMemberListManage", btnMemberListManage);
-                        map.put("btnMemberListAdd", Complex.ButtonFactory.create(context, mww, "ADD FRIENDS", "#ffffff"));
+                        map.put("btnMemberListBack", btnMemberListManage);
+                        map.put("btnMemberListAdd", Complex.ButtonFactory.create(context, mww, "+", "#ffffff"));
                         break;
                     case "MemberDetail":
                         map.put("btnDetailMyLocation", Complex.ButtonFactory.create(context, mww, "MY LOCATION"));
@@ -169,8 +183,20 @@ public class Composite {
                         map.put("btnDetailList", Complex.ButtonFactory.create(context, mww, "LIST"));
                         break;
                     case "MemberUpdate":
-                        map.put("btnUpdateCancel", Complex.ButtonFactory.create(context, mww, "CANCEL", 20));
-                        map.put("btnUpdateConfirm", Complex.ButtonFactory.create(context, mww, "CONFIRM", 20));
+                        Button btnUpdateCancel = Complex.ButtonFactory.create(context, mww, "CANCEL", "#725253");
+                        btnUpdateCancel.setTextColor(Color.parseColor("#ffffff"));
+                        map.put("btnUpdateCancel", btnUpdateCancel);
+                        Button btnUpdateConfirm = Complex.ButtonFactory.create(context, mww, "CONFIRM", "#725253");
+                        btnUpdateConfirm.setTextColor(Color.parseColor("#ffffff"));
+                        map.put("btnUpdateConfirm", btnUpdateConfirm);
+                        break;
+                    case "MemberAdd":
+                        Button btnAddCancel = Complex.ButtonFactory.create(context, mww, "CANCEL", "#725253");
+                        btnAddCancel.setTextColor(Color.parseColor("#ffffff"));
+                        map.put("btnAddCancel", btnAddCancel);
+                        Button btnAddConfirm = Complex.ButtonFactory.create(context, mww, "ADD", "#725253");
+                        btnAddConfirm.setTextColor(Color.parseColor("#ffffff"));
+                        map.put("btnAddConfirm", btnAddConfirm);
                         break;
                     case "MessageWrite":
                         map.put("btnMsgWriteSend", Complex.ButtonFactory.create(context, mww, "SEND", 20));
@@ -186,7 +212,7 @@ public class Composite {
             public void execute() {
                 LinearLayout.LayoutParams mw = create("mw");
                 LinearLayout.LayoutParams ww = create("ww");
-                LinearLayout.LayoutParams mww = create("mw", 1);
+                LinearLayout.LayoutParams mww1 = create("mw",1);
                 TextView tv = new TextView(context);
                 switch (order) {
                     case "Index":
@@ -199,12 +225,12 @@ public class Composite {
                         map.put("tvIndex",tv);
                         break;
                     case "MemberList":
-                        TextView tvMemberListFriend = Complex.TextViewFactory.create(context, mww, "Friends", 20, "center");
-                        tvMemberListFriend.setTextColor(Color.parseColor("#ffffff"));
+                        TextView tvMemberListFriend = Complex.TextViewFactory.create(context, mww1, "Friends", 20, "center");
+                        tvMemberListFriend.setTextColor(Color.parseColor("#FAE100"));
                         map.put("tvMemberListFriend", tvMemberListFriend);
                         break;
                     case "MemberDetail":
-                        map.put("tvDetail", Complex.TextViewFactory.create(context, mw, "상세", 30, "center"));
+                        map.put("tvDetail", Complex.TextViewFactory.create(context, mw, "상세", 30, "center", "#725253", "#ffffff"));
                         map.put("tvDetailName", Complex.TextViewFactory.create(context, mw, "Name:", 25, "left"));
                         map.put("tvDetailPhone", Complex.TextViewFactory.create(context, mw, "Phone:", 25, "left"));
                         map.put("tvDetailAge", Complex.TextViewFactory.create(context, mw, "Age:", 25, "left"));
@@ -212,11 +238,11 @@ public class Composite {
                         map.put("tvDetailSalary", Complex.TextViewFactory.create(context, mw, "Salary:", 25, "left"));
                         break;
                     case "MemberUpdate":
-                        map.put("tvUpdateName",Complex.TextViewFactory.create(context, ww, "NAME: ", 20, "center"));
-                        map.put("tvUpdatePhone",Complex.TextViewFactory.create(context, ww, "PHONE: ", 20));
-                        map.put("tvUpdateAge",Complex.TextViewFactory.create(context, ww, "AGE: ", 20));
-                        map.put("tvUpdateAddress",Complex.TextViewFactory.create(context, ww, "ADDRESS: ", 20));
-                        map.put("tvUpdateSalary",Complex.TextViewFactory.create(context, ww, "SALARY: ", 20));
+                        map.put("tvUpdateName",Complex.TextViewFactory.create(context, ww, "NAME: ", 25));
+                        map.put("tvUpdatePhone",Complex.TextViewFactory.create(context, ww, "PHONE: ", 25));
+                        map.put("tvUpdateAge",Complex.TextViewFactory.create(context, ww, "AGE: ", 25));
+                        map.put("tvUpdateAddress",Complex.TextViewFactory.create(context, ww, "ADDRESS: ", 25));
+                        map.put("tvUpdateSalary",Complex.TextViewFactory.create(context, ww, "SALARY: ", 25));
                         break;
                     case "Temp":
                         tv.setText("");
@@ -239,7 +265,7 @@ public class Composite {
             public void execute() {
                 LinearLayout.LayoutParams mw = create("mw");
                 LinearLayout.LayoutParams ww = create("ww");
-                LinearLayout.LayoutParams mmw3 = create("mm", 3);
+                LinearLayout.LayoutParams mmw = create("mm", 1);
                 switch (order) {
                     case "Index":
                         EditText et = new EditText(context);
@@ -257,9 +283,16 @@ public class Composite {
                         map.put("etUpdateAddressContent",Complex.EditTextFactory.create(context, ww, "", 20));
                         map.put("etUpdateSalaryContent",Complex.EditTextFactory.create(context, ww, "", 20));
                         break;
+                    case "MemberAdd":
+                        map.put("etAddName",Complex.EditTextFactory.create(context, ww, "Name", 20));
+                        map.put("etAddPhone",Complex.EditTextFactory.create(context, ww, "Phone", 20));
+                        map.put("etAddAge",Complex.EditTextFactory.create(context, ww, "Age", 20));
+                        map.put("etAddAddress",Complex.EditTextFactory.create(context, ww, "Address", 20));
+                        map.put("etAddSalary",Complex.EditTextFactory.create(context, ww, "Salary", 20));
+                        break;
                     case "MessageWrite":
                         map.put("etMsgWriteReceiver",Complex.EditTextFactory.create(context, mw, "", 20));
-                        map.put("etMsgWriteMessage",Complex.EditTextFactory.create(context, mmw3, "", 20));
+                        map.put("etMsgWriteMessage",Complex.EditTextFactory.create(context, mmw, "", 20));
                         break;
                 }
 
@@ -293,13 +326,18 @@ public class Composite {
                         map.put("llDetailBtns5", Complex.LinearLayoutFactory.create(context, mw, "h"));
                         break;
                     case "MemberUpdate":
-                        map.put("llUpdateFrame", Complex.LinearLayoutFactory.create(context, mww, "v", "#FAE100"));
+                        map.put("llUpdateFrame", Complex.LinearLayoutFactory.create(context, mm, "v", "#FAE100"));
                         map.put("llUpdateName", Complex.LinearLayoutFactory.create(context, mw));
                         map.put("llUpdatePhone", Complex.LinearLayoutFactory.create(context, mw));
                         map.put("llUpdateAge", Complex.LinearLayoutFactory.create(context, mw));
                         map.put("llUpdateAddress", Complex.LinearLayoutFactory.create(context, mw));
                         map.put("llUpdateSalary", Complex.LinearLayoutFactory.create(context, mw));
                         map.put("llUpdateButton", Complex.LinearLayoutFactory.create(context, mw));
+                        break;
+                    case "MemberAdd":
+                        map.put("llAddFrame", Complex.LinearLayoutFactory.create(context, mm, "v", "#FAE100"));
+                        map.put("llAddButton", Complex.LinearLayoutFactory.create(context, mw));
+                        map.put("llAddList", Complex.LinearLayoutFactory.create(context, mw, "v"));
                         break;
                     case "MessageWrite":
                         map.put("llMsgWriteFrame", Complex.LinearLayoutFactory.create(context, mm, "v", "#FAE100"));
