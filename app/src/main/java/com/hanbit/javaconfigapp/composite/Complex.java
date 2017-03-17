@@ -5,9 +5,13 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.TypedValue;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Map;
@@ -150,6 +154,13 @@ public class Complex {
             return ll;
         }
 
+        public static LinearLayout create(Context context, int width, int height) {
+            LinearLayout ll = new LinearLayout(context);
+            ll.getLayoutParams().width = width;
+            ll.getLayoutParams().height = height;
+            return ll;
+        }
+
         public static LinearLayout create(Context context, LinearLayout.LayoutParams layoutParams, String orientation) {
             LinearLayout ll = new LinearLayout(context);
             ll.setLayoutParams(layoutParams);
@@ -161,6 +172,21 @@ public class Complex {
                     ll.setOrientation(LinearLayout.HORIZONTAL);
                     break;
             }
+            return ll;
+        }
+
+        public static LinearLayout create(Context context, LinearLayout.LayoutParams layoutParams, String orientation, String bgColor) {
+            LinearLayout ll = new LinearLayout(context);
+            ll.setLayoutParams(layoutParams);
+            switch (orientation) {
+                case "v":case "vertical":
+                    ll.setOrientation(LinearLayout.VERTICAL);
+                    break;
+                case "h":case "horizontal":
+                    ll.setOrientation(LinearLayout.HORIZONTAL);
+                    break;
+            }
+            ll.setBackgroundColor(Color.parseColor(bgColor));
             return ll;
         }
 
@@ -221,6 +247,29 @@ public class Complex {
             }
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize);
             return tv;
+        }
+    }
+
+    /* ListView */
+    public static class ListViewFactory {
+        public static ListView create(Context context, LinearLayout.LayoutParams layoutParams) {
+            ListView lv = new ListView(context);
+            lv.setLayoutParams(layoutParams);
+            return lv;
+        }
+    }
+
+    /* WebView */
+    public static class WebViewFactory {
+        public static WebView create(Context context, LinearLayout.LayoutParams layoutParams, String url) {
+            WebView wv = new WebView(context);
+            wv.setLayoutParams(layoutParams);
+            WebSettings s = wv.getSettings();
+            s.setUseWideViewPort(true);
+            s.setJavaScriptEnabled(true);
+            wv.setWebViewClient(new WebViewClient());
+            wv.loadUrl(url);
+            return wv;
         }
     }
 }

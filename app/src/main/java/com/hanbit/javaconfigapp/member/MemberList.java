@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hanbit.javaconfigapp.R;
+import com.hanbit.javaconfigapp.action.ICreate;
 import com.hanbit.javaconfigapp.action.IDelete;
 import com.hanbit.javaconfigapp.action.IList;
 import com.hanbit.javaconfigapp.composite.Complex;
@@ -43,10 +44,8 @@ public class MemberList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Context context = MemberList.this;
-        setContentView((LinearLayout) init(context).get("llIndex"));
         final ListView listView = (ListView) init(context).get("lvMemberList");
         final HashMap<String, String> map = new HashMap<>();
-
         IList service = new IList() {
             @Override
             public List<?> list() {
@@ -65,6 +64,17 @@ public class MemberList extends AppCompatActivity {
             }
         });
 
+        ICreate cService = new ICreate() {
+            @Override
+            public void create(Object o) {
+                Intent it = new Intent(context, MemberAdd.class);
+
+                startActivity(it);
+            }
+        };
+
+//        final TextView tvFriends = (TextView) init(context).get("tvMemberListFriend");
+//        tvFriends.setText("Friends " + memberMap.size());
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View v, int i, long l) {
@@ -75,7 +85,7 @@ public class MemberList extends AppCompatActivity {
                         android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                               IDelete service = new IDelete() {
+                                IDelete service = new IDelete() {
                                     @Override
                                     public void delete() {
                                         new DeleteDAO(context).execQuery(String.format("DELETE FROM Member WHERE _id = '%s'", map.get("id")));
@@ -98,14 +108,14 @@ public class MemberList extends AppCompatActivity {
 
         @Override
         public List<?> list(String sql) {
-            Map<String,String> map;
-            ArrayList<Map<String,String>> members=new ArrayList<>();
-            SQLiteDatabase db=super.getDatabase();
-            Cursor cursor=db.rawQuery(sql,null);
+            Map<String, String> map;
+            ArrayList<Map<String, String>> members = new ArrayList<>();
+            SQLiteDatabase db = super.getDatabase();
+            Cursor cursor = db.rawQuery(sql,null);
             if(cursor!=null) {
                 if (cursor.moveToFirst()){
-                    do{
-                        map=new HashMap<>();
+                    do {
+                        map = new HashMap<>();
                         map.put("id",cursor.getString(cursor.getColumnIndex("id")));
                         map.put("name",cursor.getString(cursor.getColumnIndex("name")));
                         map.put("age",cursor.getString(cursor.getColumnIndex("age")));
@@ -113,7 +123,7 @@ public class MemberList extends AppCompatActivity {
                         map.put("address",cursor.getString(cursor.getColumnIndex("address")));
                         map.put("salary",cursor.getString(cursor.getColumnIndex("salary")));
                         members.add(map);
-                    }while(cursor.moveToNext());
+                    } while(cursor.moveToNext());
                 }
             }
             return members;
@@ -138,7 +148,7 @@ public class MemberList extends AppCompatActivity {
         private int[] photos={R.drawable.cupcake,R.drawable.donut,R.drawable.eclair,R.drawable.froyo,R.drawable.gingerbread,R.drawable.honeycomb,R.drawable.icecream,R.drawable.jellybean,R.drawable.kitkat,R.drawable.lollipop,R.drawable.cupcake,R.drawable.donut};
         public MemberAdapter(ArrayList<?> list, Context context) {
             this.list = (ArrayList<Map<String, String>>) list;
-            this.inflater= LayoutInflater.from(context);
+            this.inflater = LayoutInflater.from(context);
         }
 
         @Override
@@ -160,12 +170,13 @@ public class MemberList extends AppCompatActivity {
             LinearLayout uiItem;
             Context context = MemberList.this;
             if(v==null) {
-                uiItem = Complex.LinearLayoutFactory.create(context, Complex.LayoutParamsFactory.create("mm"));
+                LinearLayout.LayoutParams ww = Complex.LayoutParamsFactory.create("ww");
+                uiItem = Complex.LinearLayoutFactory.create(context, Complex.LayoutParamsFactory.create("mm"), "h", "#FFF9C7");
                 uiItem.setPadding(8, 8, 8, 8);
                 ImageView profileImg = new ImageView(context);
                 profileImg.setLayoutParams(new ViewGroup.LayoutParams((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics()),(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics())));
-                TextView tvName = Complex.TextViewFactory.create(context, Complex.LayoutParamsFactory.create("ww"), "Name", "B", 20);
-                TextView tvPhone = Complex.TextViewFactory.create(context, Complex.LayoutParamsFactory.create("ww"), "Phone", 17);
+                TextView tvName = Complex.TextViewFactory.create(context, ww, "Name", "B", 20);
+                TextView tvPhone = Complex.TextViewFactory.create(context, ww, "Phone", 17);
                 uiItem.addView(profileImg);
                 uiItem.addView(tvName);
                 uiItem.addView(tvPhone);

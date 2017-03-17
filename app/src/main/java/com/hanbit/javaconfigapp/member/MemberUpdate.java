@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 
 import com.hanbit.javaconfigapp.action.IUpdate;
 import com.hanbit.javaconfigapp.composite.Composite;
-import com.hanbit.javaconfigapp.composite.Complex;
 import com.hanbit.javaconfigapp.factory.WriteQuery;
 
 import java.util.HashMap;
@@ -20,62 +19,37 @@ public class MemberUpdate extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = this.getIntent();
-        LinearLayout.LayoutParams mw = Complex.LayoutParamsFactory.create("mw");
-        LinearLayout.LayoutParams ww = Complex.LayoutParamsFactory.create("ww");
-        LinearLayout.LayoutParams mww = Complex.LayoutParamsFactory.create("mw", 1);
         final Context context= MemberUpdate.this;
-        final String data = intent.getExtras().getString("data").toString();
+        final String data = this.getIntent().getExtras().getString("data").toString();
         final String id = data.split(",")[0];
         final String name = data.split(",")[1];
         final String phone = data.split(",")[2];
         final String age = data.split(",")[3];
         final String address = data.split(",")[4];
         final String salary = data.split(",")[5];
+        final HashMap<String, Object> init = (HashMap<String, Object>) init(context);
 
-        LinearLayout frame = Complex.LinearLayoutFactory.create(context, mww, "v");
-        LinearLayout uiName = Complex.LinearLayoutFactory.create(context, mw);
-        uiName.addView(Complex.TextViewFactory.create(context, ww, "NAME: ", 20));
-        uiName.addView(Complex.TextViewFactory.create(context, ww, name, 20));
-        frame.addView(uiName);
+        final EditText etNameContent = (EditText) init.get("etUpdateNameContent");
+        etNameContent.setText(name);
+        final EditText etPhoneContent = (EditText) init.get("etUpdatePhoneContent");
+        etPhoneContent.setText(phone);
+        final EditText etAgeContent = (EditText) init.get("etUpdateAgeContent");
+        etAgeContent.setText(age);
+        final EditText etAddressContent = (EditText) init.get("etUpdateAddressContent");
+        etAddressContent.setText(address);
+        final EditText etSalaryContent = (EditText) init.get("etUpdateSalaryContent");
+        etSalaryContent.setText(salary);
+        Button btCancel = (Button) init.get("btnUpdateCancel");
+        Button btConfirm = (Button) init.get("btnUpdateConfirm");
 
-        LinearLayout llPhone = Complex.LinearLayoutFactory.create(context, mw);
-        final EditText etPhoneContent = Complex.EditTextFactory.create(context, ww, phone, 20);
-        llPhone.addView(Complex.TextViewFactory.create(context, ww, "PHONE: ", 20));
-        llPhone.addView(etPhoneContent);
-        frame.addView(llPhone);
-
-        LinearLayout llAge = Complex.LinearLayoutFactory.create(context, mw);
-        llAge.addView(Complex.TextViewFactory.create(context, ww, "AGE: ", 20));
-        llAge.addView(Complex.TextViewFactory.create(context, ww, age, 20));
-        frame.addView(llAge);
-
-        LinearLayout llAddress = Complex.LinearLayoutFactory.create(context, mw);
-        final EditText etAddressContent = Complex.EditTextFactory.create(context, ww, address, 20);
-        llAddress.addView(Complex.TextViewFactory.create(context, ww, "ADDRESS: ", 20));
-        llAddress.addView(etAddressContent);
-        frame.addView(llAddress);
-
-        LinearLayout llSalary = Complex.LinearLayoutFactory.create(context, mw);
-        final EditText etSalaryContent = Complex.EditTextFactory.create(context, ww, salary, 20);
-        llSalary.addView(Complex.TextViewFactory.create(context, ww, "SALARY: ", 20));
-        llSalary.addView(etSalaryContent);
-        frame.addView(llSalary);
-
-        LinearLayout llButton = Complex.LinearLayoutFactory.create(context, mw);
-        Button btCancel = Complex.ButtonFactory.create(context, mww, "CANCEL", 20);
-        Button btConfirm = Complex.ButtonFactory.create(context, mww, "CONFIRM", 20);
-        llButton.addView(btCancel);
-        llButton.addView(btConfirm);
-        frame.addView(llButton);
-
-        setContentView(frame);
         final HashMap<String,String> map = new HashMap<>();
         final IUpdate service=new IUpdate() {
             @Override
             public void update() {
-                new UpdateDAO(context).execQuery(String.format("UPDATE Member SET phone='%s',address='%s',salary='%s' WHERE _id='%s'",
+                new UpdateDAO(context).execQuery(String.format("UPDATE Member SET name='%s', phone='%s', age='%s', address='%s',salary='%s' WHERE _id='%s'",
+                        map.get("name").equals("") ? name : (String) map.get("name"),
                         map.get("phone").equals("") ? phone : (String) map.get("phone"),
+                        map.get("age").equals("") ? age : (String) map.get("age"),
                         map.get("address").equals("") ? address : (String) map.get("address"),
                         map.get("salary").equals("") ? salary : (String) map.get("salary"),
                         id));
@@ -85,11 +59,13 @@ public class MemberUpdate extends AppCompatActivity {
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                map.put("phone",etPhoneContent.getText().toString());
-                map.put("address",etAddressContent.getText().toString());
-                map.put("salary",etSalaryContent.getText().toString());
+                map.put("name", etNameContent.getText().toString());
+                map.put("phone", etPhoneContent.getText().toString());
+                map.put("age", etAgeContent.getText().toString());
+                map.put("address", etAddressContent.getText().toString());
+                map.put("salary", etSalaryContent.getText().toString());
                 service.update();
-                Intent intent=new Intent(context, MemberDetail.class);
+                Intent intent = new Intent(context, MemberDetail.class);
                 intent.putExtra("id",id);
                 startActivity(intent);
             }
@@ -103,7 +79,7 @@ public class MemberUpdate extends AppCompatActivity {
                 startActivity(it);
             }
         });
-
+        setContentView((LinearLayout) init.get("llUpdateFrame"));
     }
 
     class UpdateDAO extends WriteQuery {
@@ -121,7 +97,6 @@ public class MemberUpdate extends AppCompatActivity {
     public HashMap<?,?> init(Context context) {
         Composite compo = new Composite(context, "MemberUpdate");
         compo.execute();
-        setContentView(compo.getFrame());
         return compo.getComponents();
     }
 }

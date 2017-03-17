@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.hanbit.javaconfigapp.action.IDetail;
 import com.hanbit.javaconfigapp.composite.Composite;
 import com.hanbit.javaconfigapp.factory.ReadQuery;
+import com.hanbit.javaconfigapp.message.MessageWrite;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,16 @@ public class MemberDetail extends AppCompatActivity {
         tv4.setText("ADDRESS: " + member.get(4));
         TextView tv5 = (TextView) map.get("tvDetailSalary");
         tv5.setText("SALARY: " + member.get(5));
+        Button btnSMS = (Button) map.get("btnDetailSMS");
+        btnSMS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(context, MessageWrite.class);
+                String sendingMsg = String.format("%s,%s,%s,%s,%s,%s", member.get(0), member.get(1), member.get(2), member.get(3), member.get(4), member.get(5));
+                it.putExtra("data",sendingMsg);
+                startActivity(it);
+            }
+        });
         Button btnDetailDial = (Button) map.get("btnDetailDial");
         btnDetailDial.setOnClickListener(new View.OnClickListener() {
             @Override
